@@ -53,10 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _saveGistId(String id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('gist_id', id);
-    setState(() {
-      gistId = id;
-    });
-    _fetchGist();
+setState(() {
+  gistId = id;
+  files.clear(); // очистка перед загрузкой
+});
+await _fetchGist();
+
   }
 
   Future<void> _fetchGist() async {
